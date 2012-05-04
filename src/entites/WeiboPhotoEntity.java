@@ -2,24 +2,21 @@ package entites;
 
 public class WeiboPhotoEntity {
 
-	private String name = "";
 	private String desc = "";
 	private String id = "";
-	private String src = "";
-	private String fileName = "";
-	private String thumbSrc = "";
-	private String thumbFileName = "";
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	private String pageSrc = "";
+	private String suffix = "";
 	public String getDesc() {
 		return desc;
 	}
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+	public String getPageSrc() {
+		return pageSrc;
+	}
+	public void setPageSrc(String pageSrc) {
+		this.pageSrc = pageSrc;
 	}
 	public String getId() {
 		return id;
@@ -27,30 +24,11 @@ public class WeiboPhotoEntity {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getSrc() {
-		return src;
+	public String getSuffix() {
+		return suffix;
 	}
-	public void setSrc(String src) {
-		this.src = src;
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
 	}
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-	public String getThumbSrc() {
-		return thumbSrc;
-	}
-	public void setThumbSrc(String thumbSrc) {
-		this.thumbSrc = thumbSrc;
-	}
-	public String getThumbFileName() {
-		return thumbFileName;
-	}
-	public void setThumbFileName(String thumbFileName) {
-		this.thumbFileName = thumbFileName;
-	}
-	
 	
 }

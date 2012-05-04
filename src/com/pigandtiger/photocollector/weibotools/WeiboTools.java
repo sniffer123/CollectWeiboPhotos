@@ -100,7 +100,7 @@ public class WeiboTools implements WeiboConfig {
 				// not encoded with gzip
 				result = EntityUtils.toString(response.getEntity());
 			}
-			 _Log.i(tag, "request %1$s result: %2$s",url,result);
+//			 _Log.i(tag, "request %1$s result: %2$s",url,result);
 			return result;
 		} else {
 			throw new IOException("Request url:" + url + " failed.");
@@ -109,6 +109,7 @@ public class WeiboTools implements WeiboConfig {
 	}
 
 	private static final String weiboLogin(WeiboContext context, String url) throws ClientProtocolException, IOException {
+		_Log.i(tag, "Weibo login");
 		HttpGet request = new HttpGet(url);
 		HttpResponse response = getNewClient().execute(request, context.getLocalContext());
 		if (response.getStatusLine().getStatusCode() == 200) {
@@ -126,6 +127,7 @@ public class WeiboTools implements WeiboConfig {
 	}
 
 	private static void preLogin(WeiboContext context, String username) throws ClientProtocolException, IOException {
+		_Log.i(tag, "Pre login");
 		Map<String, String> pair = new HashMap<String, String>();
 		pair.put("entry", "weibo");
 		pair.put("callback", "sinaSSOController.preloginCallBack");
@@ -151,6 +153,7 @@ public class WeiboTools implements WeiboConfig {
 
 	private static final String ssoLogin(WeiboContext context, final String username, final String password) throws NoSuchAlgorithmException,
 			ClientProtocolException, IOException {
+		_Log.i(tag, "SSO login");
 		final UrlEncodedFormEntity entity = WeiboTools.makeLoginRequestData(username, password, context.getServerTime(), context.getNonce());
 		HttpPost request = new HttpPost(SSO_LOGIN_URL);
 		request.setEntity(entity);
