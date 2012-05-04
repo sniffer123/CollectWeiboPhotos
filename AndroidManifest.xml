@@ -35,6 +35,10 @@
             android:name="com.pigandtiger.photocollector.WeiboGalleryActivity"
             android:configChanges="orientation"
             android:screenOrientation="landscape" />
+        <activity
+            android:name="com.pigandtiger.photocollector.WeiboPhotoActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

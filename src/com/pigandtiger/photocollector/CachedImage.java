@@ -5,8 +5,10 @@ import android.graphics.Bitmap;
 public class CachedImage {
 
 	private String name = "";
-	private boolean isSaved = false;
+	private boolean isSavedDetail = false;
+	private boolean isSavedThumb = false;
 	private Bitmap bitmap = null;
+	private Bitmap thumbBitmap = null;
 	
 	public CachedImage(String name) {
 		this.name = name;
@@ -20,12 +22,20 @@ public class CachedImage {
 		this.name = name;
 	}
 
-	public boolean isSaved() {
-		return isSaved;
+	public boolean isSavedDetail() {
+		return isSavedDetail;
 	}
 
-	public void setSaved(boolean isSaved) {
-		this.isSaved = isSaved;
+	public void setSavedDetail(boolean isSavedDetail) {
+		this.isSavedDetail = isSavedDetail;
+	}
+
+	public boolean isSavedThumb() {
+		return isSavedThumb;
+	}
+
+	public void setSavedThumb(boolean isSavedThumb) {
+		this.isSavedThumb = isSavedThumb;
 	}
 
 	public Bitmap getBitmap() {
@@ -34,6 +44,14 @@ public class CachedImage {
 
 	public void setBitmap(Bitmap bitmap) {
 		this.bitmap = bitmap;
+	}
+
+	public Bitmap getThumbBitmap() {
+		return thumbBitmap;
+	}
+
+	public void setThumbBitmap(Bitmap thumbBitmap) {
+		this.thumbBitmap = thumbBitmap;
 	}
 
 	

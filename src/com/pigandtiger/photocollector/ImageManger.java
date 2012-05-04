@@ -25,7 +25,8 @@ public class ImageManger {
 	
 	private static final String tag = "ImageManger.java";
 	
-	private static final String PHOTO_SAVE_PATH = Environment.getExternalStorageDirectory() + "/cached_photos/";
+	private static final String PHOTO_DETAIL_SAVE_PATH = Environment.getExternalStorageDirectory() + "/cached_photos/detail/";
+	private static final String PHOTO_THUMB_SAVE_PATH = Environment.getExternalStorageDirectory() + "/cached_photos/thumb/";
 	private static final String PHOTO_DETAIL_IMAGE_SRC = "http://ww%1$d.sinaimg.cn/bmiddle/%2$s.%3$s";
 	private static final String PHOTO_THUMB_IMAGE_SRC = "http://ww%1$d.sinaimg.cn/thumb150/%2$s.%3$s";
 	
@@ -73,45 +74,50 @@ public class ImageManger {
 	}
 	
 	public static boolean loadImage(final String name,final String suffix){
-		if( imageMap.contains(name) ){
+		if( imageMap.containsKey(name) ){
 			return true;
 		}else{
+			boolean isSuccess = true;
 			final String imgDetailSrc = String.format(PHOTO_DETAIL_IMAGE_SRC, (int)(Math.random()*3) + 1,name,suffix);
 			final String imgThumbSrc = String.format(PHOTO_THUMB_IMAGE_SRC, (int)(Math.random()*3) + 1,name,suffix);
-			InputStream is = null;
-			boolean isSaved = false;
-			Bitmap bitmap = null;
-			final String imgPath = PHOTO_SAVE_PATH + name;
-			try {
-				File file = new File(imgPath);
-				if( file.exists() ){
-					bitmap = BitmapFactory.decodeFile(imgPath);
-					isSaved = true;
-				}else{
-					is = getImageStream(imgThumbSrc);
-					bitmap = BitmapFactory.decodeStream(is);
-					isSaved = saveBitmap(bitmap,name);
-				}
-				CachedImage image = new CachedImage(name);
-				image.setSaved(isSaved);
-				image.setBitmap(bitmap);
-				
+			CachedImage image = null;
+			if( imageMap.containsKey(name) ){
+				image = imageMap.get(name);
+			}else{
+				image = new CachedImage(name);
 				imageMap.put(name, image);
-				
-				_Log.i(tag, "loaded image %1$s.",name);
-				
-				return true;
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
 			}
+			try{
+				image.setBitmap(__loadImage(name,PHOTO_DETAIL_SAVE_PATH,imgDetailSrc));
+				image.setThumbBitmap(__loadImage(name,PHOTO_THUMB_SAVE_PATH,imgThumbSrc));
+				_Log.i(tag, "loaded image %2$s.",name);
+			}catch(Exception e){
+				isSuccess = false;
+			}
+			return isSuccess;
 		}
+	}
+	
+	private static Bitmap __loadImage(final String name,final String path,final String src) throws Exception{
+		InputStream is = null;
+		Bitmap bitmap = null;
+		final String imgPath = path + name;
+		File file = new File(imgPath);
+		if( file.exists() ){
+			bitmap = BitmapFactory.decodeFile(imgPath);
+		}else{
+			is = getImageStream(src);
+			bitmap = BitmapFactory.decodeStream(is);
+			saveBitmap(bitmap,path,name);
+			
+		}
+		return bitmap;
 		
 	}
 	
-	public static Bitmap getImageById(String imgId){
+	public static CachedImage getImageById(String imgId){
 		if( imageMap.containsKey(imgId) ){
-			return imageMap.get(imgId).getBitmap();
+			return imageMap.get(imgId);
 		}else{
 			throw new IllegalArgumentException(String.format("Can not find image[%1$s] in image cache.",imgId));
 		}
@@ -128,13 +134,13 @@ public class ImageManger {
         return null;   
     }
 	
-	public static boolean saveBitmap(Bitmap bm, String fileName) {  
+	public static boolean saveBitmap(Bitmap bm, String path,String fileName) {  
 		boolean isSuccess = false;
-        File dirFile = new File(PHOTO_SAVE_PATH);  
+        File dirFile = new File(path);  
         if(!dirFile.exists()){  
             dirFile.mkdir();  
         }  
-        File myCaptureFile = new File(PHOTO_SAVE_PATH + fileName);  
+        File myCaptureFile = new File(path + fileName);  
         FileOutputStream fos = null;
         BufferedOutputStream bos = null;
         try {

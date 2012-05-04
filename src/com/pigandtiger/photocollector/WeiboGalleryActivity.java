@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
@@ -97,7 +98,10 @@ public class WeiboGalleryActivity extends Activity implements IListItemActionLis
 	}
 
 	public void onClickItem(WeiboPhotoEntity entity, int position, View v) {
-		
+		Intent intent = new Intent();
+		intent.putExtra("PHOTO_ID", entity.getId());
+		intent.setClass(this, WeiboPhotoActivity.class);
+		startActivity(intent);
 	}
 }
 

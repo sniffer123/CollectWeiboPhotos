@@ -34,7 +34,7 @@ public class WeiboGalleryListItemView extends ListItemViewTemplate<WeiboPhotoEnt
 		// TODO Auto-generated method stub
 		super.updateView(e, l, position);
 		
-		imgPhoto.setImageBitmap(ImageManger.getImageById(e.getId()));
+		imgPhoto.setImageBitmap(ImageManger.getImageById(e.getId()).getThumbBitmap());
 		labelPhotoDesc.setText(e.getDesc());
 	}
 	
