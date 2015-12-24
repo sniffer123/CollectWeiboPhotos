@@ -53,7 +53,7 @@ public class CollectWeiboPhotosActivity extends Activity implements OnClickListe
 			AsyncTaskManager.doJob(this.getMainLooper(), this, new IJobExecutor() {
 				public void execute(final CallBackTaskResult result,final Object... params) throws Exception {
 		        	WeiboContext context = new WeiboContext();
-		        	WeiboTools.login(context, "hzk47st@126.com", "#dzw,tt");
+		        	WeiboTools.login(context, "#####", "#####");
 					collector = new PhotoCollector(context);
 					collector.request(1917331377);
 				}
